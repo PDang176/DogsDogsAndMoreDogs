@@ -1,4 +1,11 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { useNavigate } from 'react-router';
 
 interface AuthContextInterface {
   isAuthenticated: boolean;
@@ -9,9 +16,18 @@ interface AuthContextInterface {
 const AuthContext = createContext<AuthContextInterface | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const checkIsAuthenticated = sessionStorage.getItem('isAuthenticated');
+    return checkIsAuthenticated ? JSON.parse(checkIsAuthenticated) : false;
+  });
+
+  useEffect(() => {
+    sessionStorage.setItem('isAuthenticated', isAuthenticated);
+  }, [isAuthenticated]);
 
   const url = 'https://frontend-take-home-service.fetch.com';
+
+  const navigate = useNavigate();
 
   const onLogin = () => {
     fetch(`${url}/auth/login`, {
@@ -30,6 +46,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           throw new Error(`Response status: ${response.status}`);
         }
         setIsAuthenticated(true);
+        navigate('/');
       })
       .catch((error) => {
         console.error('Login Error:' + error.message);
@@ -39,12 +56,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const onLogout = () => {
     fetch(`${url}/auth/logout`, {
       method: 'POST',
+      credentials: 'include',
     })
       .then((response) => {
         if (!response.ok) {
           throw new Error(`Response status: ${response.status}`);
         }
         setIsAuthenticated(false);
+        navigate('/login');
       })
       .catch((error) => {
         console.error('Login Error:' + error.message);
