@@ -4,12 +4,15 @@ import { BrowserRouter } from 'react-router';
 
 import { GlobalStyle } from './themes/globalStyles.tsx';
 import App from './App.tsx';
+import { AuthProvider } from './contexts/AuthProvider.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <GlobalStyle />
-      <App />
+      <AuthProvider>
+        <GlobalStyle />
+        <App />
+      </AuthProvider>
     </BrowserRouter>
   </StrictMode>
 );
