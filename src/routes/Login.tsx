@@ -1,24 +1,17 @@
-import { useNavigate } from 'react-router';
-import { useAuthContext } from '../contexts/AuthProvider';
-import { useEffect } from 'react';
+import styled from 'styled-components';
+// import { useAuthContext } from '../contexts/AuthProvider';
 
 const Login = () => {
-  const { isAuthenticated, onLogin, onLogout } = useAuthContext();
+  // const { onLogin, onLogout } = useAuthContext();
 
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/');
-    }
-  }, []);
-
-  return (
-    <div>
-      <button onClick={onLogin}>Login</button>
-      <button onClick={onLogout}>Logout</button>
-    </div>
-  );
+  return <LoginWrapper>Dogs! Dogs! & More Dogs!</LoginWrapper>;
 };
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+const LoginWrapper = styled.div`
+  margin: 0;
+  padding: 0;
+`;
 
 export default Login;
