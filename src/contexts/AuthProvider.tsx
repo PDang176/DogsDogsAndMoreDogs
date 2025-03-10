@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router';
 
 interface AuthContextInterface {
   isAuthenticated: boolean;
-  onLogin: () => void;
+  onLogin: (name: string, email: string) => void;
   onLogout: () => void;
 }
 
@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const navigate = useNavigate();
 
-  const onLogin = () => {
+  const onLogin = (name: string, email: string) => {
     fetch(`${url}/auth/login`, {
       method: 'POST',
       headers: {
@@ -37,8 +37,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       },
       credentials: 'include',
       body: JSON.stringify({
-        name: 'Patrick',
-        email: 'patrickdangt@gmail.com',
+        name,
+        email,
       }),
     })
       .then((response) => {

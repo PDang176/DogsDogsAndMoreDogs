@@ -14,6 +14,8 @@ export const GlobalStyle = createGlobalStyle`
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    
+    font-size: 16px;
   }
 
   a {
@@ -25,12 +27,18 @@ export const GlobalStyle = createGlobalStyle`
     color: #535bf2;
   }
 
-  body {
+  html, body, #root {
     margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
     display: flex;
     place-items: center;
-    min-width: 320px;
-    min-height: 100vh;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 223, 0, 80%) 0%,
+      rgb(252, 174, 30, 80%) 50%
+    );
   }
 
   h1 {
